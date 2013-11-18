@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B5B4AA3718392E6A00A9D3D5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5B4AA3618392E6A00A9D3D5 /* main.cpp */; };
-		B5B4AA3918392E6A00A9D3D5 /* DataCompression.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5B4AA3818392E6A00A9D3D5 /* DataCompression.1 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,7 +17,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				B5B4AA3918392E6A00A9D3D5 /* DataCompression.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -27,7 +25,6 @@
 /* Begin PBXFileReference section */
 		B5B4AA3318392E6A00A9D3D5 /* DataCompression */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataCompression; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B4AA3618392E6A00A9D3D5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		B5B4AA3818392E6A00A9D3D5 /* DataCompression.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = DataCompression.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				B5B4AA3618392E6A00A9D3D5 /* main.cpp */,
-				B5B4AA3818392E6A00A9D3D5 /* DataCompression.1 */,
 			);
 			path = DataCompression;
 			sourceTree = "<group>";
