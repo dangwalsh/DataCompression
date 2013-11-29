@@ -1,3 +1,5 @@
+//  Daniel Walsh
+//  Final Exam
 //
 //  main.cpp
 //  DataCompression
@@ -5,84 +7,64 @@
 //  Created by Daniel Walsh on 11/17/13.
 //  Copyright (c) 2013 Daniel Walsh. All rights reserved.
 //
+//#define _DEBUG
+#define SIZE 10
 
 #include <iostream>
 #include <fstream>
 #include <set>
 #include <bitset>
 #include <vector>
+#include "Compressor.h"
+#include "Compressor.cpp"
 
 using namespace std;
 
-bitset<17> findWord(string w, set<string> key) {
-    set<string>::iterator it = key.find(w);
-    long dist = distance(key.begin(), it);
-    if (dist == key.size()) return dist;
-    else return ++dist;
-}
-
-int main( )
+int main()
 {
-    set<string> words;
-    set<string>::iterator itor;
-    fstream in;
-    
-    in.open("brit-a-z.txt");
-    if (in.fail()) {
-        cerr << "file open failed!";
-        exit(1);
-    }
-    while (!in.eof()) {
-        string word;
-        in >> word;
-        words.insert(word);
-    }
-    in.close();
-    
-    in.open("symbols.txt");
-    if (in.fail()) {
-        cerr << "file open failed!";
-        exit(1);
-    }
-    while (!in.eof()) {
-        string word;
-        in >> word;
-        words.insert(word);
-    }
-    in.close();
-    
-    for (auto& elem : words)
-        cout << elem << '\n';
-    
-    itor = words.end();
-    words.erase(--itor);
-    cout << words.size() << '\n';
-    
-    vector<bitset<17>> comp;
-    
-    in.open("macbeth.txt");
-    if (in.fail()) {
-        cerr << "file open failed!";
-        exit(1);
-    }
-    while (!in.eof()) {
-        string word;
-        in >> word;
-        comp.push_back(findWord(word, words));
-    }
-    in.close();
-    
-    copy(comp.begin(), comp.end(), ostream_iterator<bitset<17>>(cout, "\n"));
+    // version 1
+    // writing and reading to an intenral array
+    // less practical but fulfills the assignment
 
-    for (vector<bitset<17>>::iterator it = comp.begin(); it != comp.end(); ++it) {
-        itor = words.begin();
-        for (int i = 1; i < it->to_ulong(); ++i) {
-            ++itor;
-        }
-        cout << *itor << " ";
+    size_t count = 0;
+    string word = "";
+    Compressor<SIZE> comp("declaration.txt");
+
+    ifstream in("gettysburg.txt");
+    if (in.fail()) {
+        cerr << "file open failed!";
+        exit(1);
     }
-    cout << endl;
+    while (!in.eof()) {
+        in >> word;
+        ++count;
+    }
+    in.close();
     
-    return 0;
+    bitset<SIZE> *bitarr = new bitset<SIZE>[count];
+    in.open("gettysburg.txt");
+    for (int i = 0; i < count; ++i) {
+        in >> word;
+        bitarr[i] = comp.getBits(word);
+    }
+    in.close();
+    
+    for (bitset<SIZE> *ptr = bitarr; ptr < bitarr + count; ++ptr)
+        cout << comp.inflate(ptr) << " ";
+    
+    delete [] bitarr;
+    bitarr = NULL;
+    
+    cout << "\n\n\n";
+    
+    // version 2
+    // writing and reading to a file
+    // more practical since data is stored outside of application
+    
+    Compressor<SIZE> compressor;
+    compressor.setKey("declaration.txt");
+    compressor.compress("gettysburg.txt", "gettysburg.comp");
+    compressor.inflate("gettysburg.comp");
+    
+    return EXIT_SUCCESS;
 }
-
